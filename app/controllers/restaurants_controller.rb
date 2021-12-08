@@ -37,6 +37,7 @@ class RestaurantsController < ApplicationController
   # DELETE /restaurants/1 or /restaurants/1.json
   def destroy
     @restaurant.destroy
+    redirect_to @restaurant
   end
 
   private

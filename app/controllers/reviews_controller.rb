@@ -22,6 +22,9 @@ class ReviewsController < ApplicationController
     redirect_to restaurant_path(@restaurant)
   end
 
+  def show
+  end
+
   private
 
   def params_review
