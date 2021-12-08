@@ -12,6 +12,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
+    @restaurant = Restaurant.find(params[:restaurant_id])
     @review = Review.new
   end
 
@@ -21,11 +22,12 @@ class ReviewsController < ApplicationController
 
   # POST /reviews or /reviews.json
   def create
+    @restaurant = Restaurant.find(params[:restaurant_id])
     @review = Review.new(review_params)
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @review, notice: "Review was successfully created." }
+        format.html { redirect_to restaurant_path(@restaurant), notice: "Review was successfully created." }
         format.json { render :show, status: :created, location: @review }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -33,6 +35,7 @@ class ReviewsController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /reviews/1 or /reviews/1.json
   def update
@@ -49,12 +52,16 @@ class ReviewsController < ApplicationController
 
   # DELETE /reviews/1 or /reviews/1.json
   def destroy
+    @review = Review.find(params[:id])
+    @restaurant = @review.restaurant
     @review.destroy
     respond_to do |format|
       format.html { redirect_to reviews_url, notice: "Review was successfully destroyed." }
       format.json { head :no_content }
     end
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
